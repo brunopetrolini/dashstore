@@ -1,0 +1,9 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.12.11/
+firebase_auth=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.14.0+9/
+firebase_core=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.4/
+firebase_core_web=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2/
+firebase_storage=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.1.1/
+flutter_plugin_android_lifecycle=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.5/
+image_cropper=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/image_cropper-1.2.1/
+image_picker=/Users/brunopetrolini/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.3+1/
