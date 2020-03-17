@@ -92,6 +92,8 @@ class UserBloc extends BlocBase {
     _users[uid]["subscription"].cancel();
   }
 
+  Map<String, dynamic> getUsers(String uid) => _users[uid];
+
   @override
   void dispose() {
     _usersController.close();

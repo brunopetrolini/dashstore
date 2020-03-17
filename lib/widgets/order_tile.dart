@@ -7,16 +7,24 @@ class OrderTile extends StatelessWidget {
 
   OrderTile({@required this.order});
 
-  final status = ["", "Preparação", "Transporte", "Entrege"];
+  final status = [
+    "",
+    "Preparação",
+    "Transporte",
+    "Aguardando Entrega",
+    "Entrege"
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Card(
         child: ExpansionTile(
+          key: Key(order.documentID),
+          initiallyExpanded: order.data["status"] != 4,
           title: Text(
-            "#${order.documentID} - ${status[order.data["status"]]}",
+            "#${order.documentID}\n${status[order.data["status"]]}",
             style: TextStyle(
                 color: order.data["status"] != 4
                     ? Colors.grey[850]
@@ -29,38 +37,57 @@ class OrderTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  OrderHeader(),
+                  OrderHeader(order: order),
                   Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: order.data["products"].map<Widget>((product) {
-                        return ListTile(
-                          title: Text(product["product"]["title"] +
-                              " " +
-                              product["size"]),
-                          subtitle:
-                              Text(product["category"] + "/" + product["pid"]),
-                          trailing: Text(
-                            product["quantity"].toString(),
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                        );
-                      })),
+                    mainAxisSize: MainAxisSize.min,
+                    children: order.data["products"].map<Widget>((product) {
+                      return ListTile(
+                        title: Text(product["product"]["title"] +
+                            " " +
+                            product["size"]),
+                        subtitle:
+                            Text(product["category"] + "/" + product["pid"]),
+                        trailing: Text(
+                          product["quantity"].toString(),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        contentPadding: EdgeInsets.zero,
+                      );
+                    }).toList(),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Firestore.instance
+                              .collection("users")
+                              .document(order["clientID"])
+                              .collection("orders")
+                              .document(order.documentID)
+                              .delete();
+                          order.reference.delete();
+                        },
                         child: Text("Excluir"),
                         textColor: Colors.red,
                       ),
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: order.data["status"] > 1
+                            ? () {
+                                order.reference.updateData(
+                                    {"status": order.data["status"] - 1});
+                              }
+                            : null,
                         child: Text("Regredir"),
                         textColor: Colors.grey[850],
                       ),
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: order.data["status"] < 4
+                            ? () {
+                                order.reference.updateData(
+                                    {"status": order.data["status"] + 1});
+                              }
+                            : null,
                         child: Text("Avançar"),
                         textColor: Colors.green,
                       ),
