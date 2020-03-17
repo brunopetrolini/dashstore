@@ -112,6 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               backgroundColor: Colors.white,
               label: "Concluídos Abaixo",
+              onTap: () =>
+                  _ordersBloc.setOrderCreterion(SortCriterion.READY_LAST),
             ),
             SpeedDialChild(
               child: Icon(
@@ -120,6 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               backgroundColor: Colors.white,
               label: "Concluídos Acima",
+              onTap: () =>
+                  _ordersBloc.setOrderCreterion(SortCriterion.READY_FIRST),
             ),
           ],
         );

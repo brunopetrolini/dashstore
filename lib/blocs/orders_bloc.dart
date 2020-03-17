@@ -38,7 +38,7 @@ class OrdersBloc extends BlocBase {
         }
       });
 
-      _ordersController.add(_orders);
+      _sort();
     });
   }
 
@@ -51,9 +51,34 @@ class OrdersBloc extends BlocBase {
   void _sort() {
     switch (_criterion) {
       case SortCriterion.READY_FIRST:
-        _orders.sort((a, b) {});
+        _orders.sort((a, b) {
+          int sa = a.data["status"];
+          int sb = b.data["status"];
+
+          if (sa < sb)
+            return 1;
+          else if (sa > sb)
+            return -1;
+          else
+            return 0;
+        });
+        break;
       case SortCriterion.READY_LAST:
+        _orders.sort((a, b) {
+          int sa = a.data["status"];
+          int sb = b.data["status"];
+
+          if (sa > sb)
+            return 1;
+          else if (sa < sb)
+            return -1;
+          else
+            return 0;
+        });
+        break;
     }
+
+    _ordersController.add(_orders);
   }
 
   @override

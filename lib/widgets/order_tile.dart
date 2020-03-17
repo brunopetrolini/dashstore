@@ -24,7 +24,7 @@ class OrderTile extends StatelessWidget {
           key: Key(order.documentID),
           initiallyExpanded: order.data["status"] != 4,
           title: Text(
-            "#${order.documentID}\n${status[order.data["status"]]}",
+            "#${order.documentID}\nStatus: ${status[order.data["status"]]}",
             style: TextStyle(
                 color: order.data["status"] != 4
                     ? Colors.grey[850]
