@@ -4,6 +4,7 @@ import 'package:dashstore/blocs/user_bloc.dart';
 import 'package:dashstore/tabs/orders_tab.dart';
 import 'package:dashstore/tabs/users_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -91,6 +92,39 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      floatingActionButton: _floatingButton(),
     );
+  }
+
+  Widget _floatingButton() {
+    switch (_page) {
+      case 1:
+        return SpeedDial(
+          child: Icon(Icons.sort),
+          backgroundColor: Theme.of(context).primaryColor,
+          overlayOpacity: 0.4,
+          overlayColor: Colors.black,
+          children: [
+            SpeedDialChild(
+              child: Icon(
+                Icons.arrow_downward,
+                color: Theme.of(context).primaryColor,
+              ),
+              backgroundColor: Colors.white,
+              label: "Concluídos Abaixo",
+            ),
+            SpeedDialChild(
+              child: Icon(
+                Icons.arrow_upward,
+                color: Theme.of(context).primaryColor,
+              ),
+              backgroundColor: Colors.white,
+              label: "Concluídos Acima",
+            ),
+          ],
+        );
+      default:
+        return null;
+    }
   }
 }
