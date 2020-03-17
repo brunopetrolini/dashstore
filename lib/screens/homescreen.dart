@@ -1,5 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:dashstore/blocs/orders_bloc.dart';
 import 'package:dashstore/blocs/user_bloc.dart';
+import 'package:dashstore/tabs/orders_tab.dart';
 import 'package:dashstore/tabs/users_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _page = 0;
 
   UserBloc _userBloc;
+  OrdersBloc _ordersBloc;
 
   @override
   void initState() {
@@ -21,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController = PageController();
 
     _userBloc = UserBloc();
+    _ordersBloc = OrdersBloc();
   }
 
   @override
@@ -69,18 +73,21 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: BlocProvider<UserBloc>(
           bloc: _userBloc,
-          child: PageView(
-            onPageChanged: (page) {
-              setState(() {
-                _page = page;
-              });
-            },
-            controller: _pageController,
-            children: <Widget>[
-              UsersTab(),
-              Container(color: Colors.yellow),
-              Container(color: Colors.green),
-            ],
+          child: BlocProvider<OrdersBloc>(
+            bloc: _ordersBloc,
+            child: PageView(
+              onPageChanged: (page) {
+                setState(() {
+                  _page = page;
+                });
+              },
+              controller: _pageController,
+              children: <Widget>[
+                UsersTab(),
+                OrdersTab(),
+                Container(color: Colors.green),
+              ],
+            ),
           ),
         ),
       ),
